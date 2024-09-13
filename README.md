@@ -53,4 +53,21 @@ The server will start, and you can now access the FastAPI endpoint by visiting t
 http://127.0.0.1:8000/
 Here, you'll see the default JSON response from the FastAPI back-end: {"Hello": "World"}.
 
+5. Configure the Vite Proxy for FastAPI
+To enable communication between your Vue front-end and FastAPI back-end, you need to configure the Vite development server to proxy requests. Open the vite.config.mjs file located at:
+
+### vite.config.mjs
+Add the following proxy configuration under server:
+
+server: {
+  proxy: {
+    '/': {
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      secure: false,
+    }
+  }
+}
+This configuration tells Vite to forward any requests from the Vue front-end to the FastAPI back-end running on http://localhost:8000.
+
 Now you have a working full-stack application with a Vue.js front-end and FastAPI back-end!
