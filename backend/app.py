@@ -1,7 +1,17 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 app = FastAPI()
+
+# Configurează CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Permite cererile de la frontend-ul tău
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite toate metodele (GET, POST, etc.)
+    allow_headers=["*"],  # Permite toate headerele
+)
 
 class Task(BaseModel):
     task: str
@@ -10,7 +20,7 @@ tasks = []
 #acesta este o ruta de baza,atunci cand apesi pe http://127.0.0.1:8000/
 @app.get("/")
 def read_root():
-    return{"message:" "Welcome to the Task API"}
+    return tasks
 
 #aceasta este ruta care obtine toate taskurile.Scopul acestei rute este să returneze lista de taskuri curente.
 @app.get("/tasks")
